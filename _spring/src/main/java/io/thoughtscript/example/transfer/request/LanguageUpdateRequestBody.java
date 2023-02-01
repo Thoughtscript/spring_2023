@@ -9,6 +9,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LanguageStudentRequestBody extends GenericRequestBody {
-    private String name;
+public class LanguageUpdateRequestBody extends LanguageRequestBody {
+    private String greeting;
 }

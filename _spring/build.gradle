@@ -13,6 +13,7 @@ dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb-reactive', version: '2.7.5'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis-reactive', version: '2.7.5'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-amqp', version: '2.7.5'
+    implementation group: 'org.mongodb', name: 'mongodb-driver-sync', version: '4.8.2'
 
     // These are required for Gradle - thought JAXB was part of the spring-boot-starter-parent dependency tree? (Maven gets this automatically)
     implementation 'jakarta.xml.bind:jakarta.xml.bind-api:2.3.3'

@@ -26,11 +26,12 @@ public class WebFluxRouterConfiguration {
         @Bean
         @Autowired
         public RouterFunction<ServerResponse> routes(FunctionalRouterWebHandler handler) {
-            return route(POST(API_ROUTER_USER_ONE).and(accept(APPLICATION_JSON)), handler::getOneLanguageStudent)
-                    .andRoute(POST(API_ROUTER_USER_NEW).and(accept(APPLICATION_JSON)), handler::saveOneLanguageStudent)
-                    .andRoute(DELETE(API_ROUTER_USER_ONE).and(accept(APPLICATION_JSON)), handler::deleteOneLanguageStudent)
-                    .andRoute(PUT(API_ROUTER_USER_ONE).and(accept(APPLICATION_JSON)), handler::updateOneLanguageStudent)
-                    .andRoute(GET(API_ROUTER_USER_ALL).and(accept(APPLICATION_JSON)), handler::getAllLanguageStudent);
+            // Must be a POST to accept body
+            return route(POST(API_ROUTER_LANGUAGES_ONE).and(accept(APPLICATION_JSON)), handler::getOneLanguage)
+                    .andRoute(POST(API_ROUTER_LANGUAGES_NEW).and(accept(APPLICATION_JSON)), handler::saveOneLanguage)
+                    .andRoute(DELETE(API_ROUTER_LANGUAGES_ONE).and(accept(APPLICATION_JSON)), handler::deleteOneLanguage)
+                    .andRoute(PUT(API_ROUTER_LANGUAGES_ONE).and(accept(APPLICATION_JSON)), handler::updateOneLanguage)
+                    .andRoute(GET(API_ROUTER_LANGUAGES_ALL).and(accept(APPLICATION_JSON)), handler::getAllLanguage);
         }
 
 }

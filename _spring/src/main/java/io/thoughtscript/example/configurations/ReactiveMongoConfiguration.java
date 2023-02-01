@@ -2,8 +2,8 @@ package io.thoughtscript.example.configurations;
 
 import com.mongodb.reactivestreams.client.MongoClient;
 import com.mongodb.reactivestreams.client.MongoClients;
-import io.thoughtscript.example.reactiverepositories.LanguageMongoReactiveRepository;
-import io.thoughtscript.example.reactiverepositories.LanguageStudentMongoReactiveRepository;
+import io.thoughtscript.example.Constants;
+import io.thoughtscript.example.repositories.LanguageMongoReactiveRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -13,8 +13,8 @@ import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRepositories;
 
 @Configuration
-@EnableReactiveMongoRepositories(basePackageClasses = {LanguageMongoReactiveRepository.class, LanguageStudentMongoReactiveRepository.class})
-@ComponentScan(basePackages = "io.thoughtscript.example.reactiverepositories")
+@EnableReactiveMongoRepositories(basePackageClasses = {LanguageMongoReactiveRepository.class})
+@ComponentScan(basePackages = "io.thoughtscript.example.repositories")
 class ReactiveMongoConfiguration extends AbstractReactiveMongoConfiguration {
 
   @Value("${spring.data.mongodb.host}")
@@ -24,7 +24,7 @@ class ReactiveMongoConfiguration extends AbstractReactiveMongoConfiguration {
 
   @Override
   protected String getDatabaseName() {
-    return "mongodb";
+    return Constants.MONGO_DB_NAME;
   }
 
   @Override

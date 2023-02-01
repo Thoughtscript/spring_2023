@@ -3,9 +3,10 @@ package io.thoughtscript.example.prepopulate;
 import io.thoughtscript.example.domain.Language;
 import io.thoughtscript.example.domain.LanguageStudent;
 import io.thoughtscript.example.domain.RedisAuthentication;
-import io.thoughtscript.example.reactiverepositories.AuthenticationRedisReactiveRepository;
-import io.thoughtscript.example.reactiverepositories.LanguageMongoReactiveRepository;
-import io.thoughtscript.example.reactiverepositories.LanguageStudentMongoReactiveRepository;
+import io.thoughtscript.example.repositories.AuthenticationRedisBlockingRepository;
+import io.thoughtscript.example.repositories.AuthenticationRedisReactiveRepository;
+import io.thoughtscript.example.repositories.LanguageMongoReactiveRepository;
+import io.thoughtscript.example.repositories.LanguageStudentMongoRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -24,10 +25,13 @@ PopulateDataRunner implements CommandLineRunner {
   LanguageMongoReactiveRepository languageMongoReactiveRepository;
 
   @Autowired
-  LanguageStudentMongoReactiveRepository languageStudentMongoReactiveRepository;
+  LanguageStudentMongoRepository languageStudentMongoRepository;
 
   @Autowired
   AuthenticationRedisReactiveRepository authenticationRedisReactiveRepository;
+
+  @Autowired
+  AuthenticationRedisBlockingRepository authenticationRedisBlockingRepository;
 
   @Override
   public void run(String... args) throws Exception {
@@ -41,12 +45,12 @@ PopulateDataRunner implements CommandLineRunner {
       /**
        * Generate and Persist to MongoDB.
        */
-      Language korean = new Language("korean");
-      Language english = new Language("english");
-      Language german = new Language("german");
-      Language java = new Language("java");
-      Language python = new Language("python");
-      Language javascript = new Language("javascript");
+      Language korean = new Language("korean", "Anyoung haseyo");
+      Language english = new Language("english", "hello");
+      Language german = new Language("german", "guten tag");
+      Language java = new Language("java", "hello world");
+      Language python = new Language("python", "hello world");
+      Language javascript = new Language("javascript", "hello world");
 
       log.info("Preparing to pre-populate the database with data...");
       languageMongoReactiveRepository.saveAll(Flux.just(korean, english, german, java, python, javascript)).subscribe();
@@ -78,11 +82,17 @@ PopulateDataRunner implements CommandLineRunner {
       LanguageStudent mary = new LanguageStudent("mary", marysLanguage, java);
 
       log.info("Preparing to pre-populate the database with data...");
-      languageStudentMongoReactiveRepository.saveAll(Flux.just(adam, bob, mary)).subscribe();
+      languageStudentMongoRepository.save(adam);
+      languageStudentMongoRepository.save(bob);
+      languageStudentMongoRepository.save(mary);
       log.info("Verifying persist to MongoDB...");
-      languageStudentMongoReactiveRepository.findAll().log().map(LanguageStudent::getName).subscribe(log::info);
-      languageStudentMongoReactiveRepository.findAll().log().map(LanguageStudent::getLanguageIds).subscribe(t -> log.info(String.valueOf(t)));
-      languageStudentMongoReactiveRepository.findAll().log().map(LanguageStudent::getPrimaryLanguageString).subscribe(log::info);
+
+      List<LanguageStudent> students = languageStudentMongoRepository.findAll();
+      for (LanguageStudent student : students) {
+          log.info(student.getName());
+          log.info(student.getPrimaryLanguage().getName());
+          log.info(student.getLanguages().get(0).getName());
+      }
 
       Thread.sleep(10000);
 
@@ -93,13 +103,28 @@ PopulateDataRunner implements CommandLineRunner {
       RedisAuthentication redisAuthenticationXiu = new RedisAuthentication("xiu", "22222");
       RedisAuthentication redisAuthenticationSolomon = new RedisAuthentication("solomon", "33333");
 
-      authenticationRedisReactiveRepository.save(redisAuthenticationXiu).subscribe();
-      authenticationRedisReactiveRepository.save(redisAuthenticationSolomon).subscribe();
+      //authenticationRedisReactiveRepository.save(redisAuthenticationXiu).subscribe();
+      //authenticationRedisReactiveRepository.save(redisAuthenticationSolomon).subscribe();
       log.info("Verifying authentication persist to Redis...");
       Thread.sleep(5000);
 
+      //authenticationRedisReactiveRepository.findOneByUsername(redisAuthenticationXiu.getUsername()).subscribe();
+      //authenticationRedisReactiveRepository.findOneByUsername(redisAuthenticationSolomon.getUsername()).subscribe();
+
+      // blocking is accessible by reactive.
+      // reactive is not accessible from blocking.
+
+      authenticationRedisBlockingRepository.saveBlocking(redisAuthenticationXiu);
+      authenticationRedisBlockingRepository.saveBlocking(redisAuthenticationSolomon);
+
+      RedisAuthentication redisAuthenticationXiuBlocking = authenticationRedisBlockingRepository.findOneByUsernameBlocking(redisAuthenticationXiu.getUsername());
+      RedisAuthentication redisAuthenticationSolomonBlocking = authenticationRedisBlockingRepository.findOneByUsernameBlocking(redisAuthenticationSolomon.getUsername());
+
       authenticationRedisReactiveRepository.findOneByUsername(redisAuthenticationXiu.getUsername()).subscribe();
       authenticationRedisReactiveRepository.findOneByUsername(redisAuthenticationSolomon.getUsername()).subscribe();
+
+      log.info(redisAuthenticationXiuBlocking.getToken());
+      log.info(redisAuthenticationSolomonBlocking.getToken());
 
     } catch (Exception ex) {
       log.error("Exception pre-populating database with contact and email data: " + ex);

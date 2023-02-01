@@ -1,4 +1,4 @@
-package io.thoughtscript.example.reactiverepositories;
+package io.thoughtscript.example.repositories;
 
 import io.thoughtscript.example.domain.Language;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;

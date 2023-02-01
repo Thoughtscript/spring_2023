@@ -8,7 +8,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class AuthenticatedUpdate extends AuthenticatedUuid {
+public class AuthenticatedLanguageStudentUpdate extends AuthenticatedUuid {
   private Language newPrimaryLanguage;
   private List<Language> newLanguages;
   private String newName;

@@ -22,7 +22,22 @@ public class WebFluxConfiguration implements WebFluxConfigurer {
                 .allowedMethods("POST", "GET", "PUT", "DELETE")
                 .allowCredentials(false).maxAge(CORS_MAX_AGE);
 
-        registry.addMapping(API_FLUX_USER_ALL)
+        registry.addMapping("/api/students/**")
+                .allowedOrigins(CORS_ALLOWED_ORIGINS)
+                .allowedMethods("POST", "GET", "PUT", "DELETE")
+                .allowCredentials(false).maxAge(CORS_MAX_AGE);
+
+        registry.addMapping("/api/flux/**")
+                .allowedOrigins(CORS_ALLOWED_ORIGINS)
+                .allowedMethods("POST", "GET", "PUT", "DELETE")
+                .allowCredentials(false).maxAge(CORS_MAX_AGE);
+
+        registry.addMapping("/api/functional/**")
+                .allowedOrigins(CORS_ALLOWED_ORIGINS)
+                .allowedMethods("POST", "GET", "PUT", "DELETE")
+                .allowCredentials(false).maxAge(CORS_MAX_AGE);
+
+        registry.addMapping("/api/unsecured/**")
                 .allowedOrigins(CORS_ALLOWED_ORIGINS)
                 .allowedMethods("POST", "GET", "PUT", "DELETE")
                 .allowCredentials(false).maxAge(CORS_MAX_AGE);
@@ -33,4 +48,5 @@ public class WebFluxConfiguration implements WebFluxConfigurer {
                 .allowCredentials(false).maxAge(CORS_MAX_AGE);
 
     }
+
 }

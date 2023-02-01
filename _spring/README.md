@@ -42,62 +42,144 @@ keytool -genkey \
 
 ### Secured
 
-1. Secured - getOneUser
+1. Secured - getOneLanguageStudent
 ```
-POST http://localhost:8080/api/flux/students/one
-```
-
-2. Secured - saveOneUser
-```
-POST http://localhost:8080/api/flux/students/one/new
+POST http://localhost:8080/api/students/one
 ```
 
-3. Secured - getOneUser
+2. Secured - saveOneLanguageStudent
 ```
-DELETE http://localhost:8080/api/flux/students/one
-```
-
-4. Secured - updateOneUser
-```
-POST http://localhost:8080/api/flux/students/one
+POST http://localhost:8080/api/students/one/new
 ```
 
-5. Secured - getAllUsers
+3. Secured - deleteOneLanguageStudent
 ```
-POST http://localhost:8080/api/flux/students/all
+DELETE http://localhost:8080/api/students/one
+```
+
+4. Secured - updateOneLanguageStudent
+```
+POST http://localhost:8080/api/students/one
+```
+
+5. Secured - getAllLanguageStudents
+```
+POST http://localhost:8080/api/students/all
+```
+
+6. Secured - getOneLanguage
+```
+POST http://localhost:8080/api/flux/languages/one
+```
+
+7. Secured - saveOneLanguage
+```
+POST http://localhost:8080/api/flux/languages/one/new
+```
+
+8. Secured - deleteOneLanguage
+```
+DELETE http://localhost:8080/api/flux/languages/one
+```
+
+9. Secured - updateOneLanguage
+```
+POST http://localhost:8080/api/flux/languages/one
+```
+
+10. Secured - getAllLanguages
+```
+POST http://localhost:8080/api/flux/languages/all
 ```
 
 ### Public
 
-6. getOneLanguageStudent
+11. Unsecured - getAllLanguages
 ```
-POST http://localhost:8080/api/functional/students/one
-```
-
-7. saveOneLanguageStudent
-```
-POST http://localhost:8080/api/functional/students/new
-```
-
-8. deleteOneLanguageStudent
-```
-DELETE http://localhost:8080/api/functional/students/one
-```
-
-9. updateOneLanguageStudent
-```
-PUT http://localhost:8080/api/functional/students/one
-```
-
-10. getAllLanguageStudent
-```
-GET http://localhost:8080/api/functional/students/all
+GET http://localhost:8080/api/unsecured/languages/all
 ```
 ```JSON
 [
-    {"name":"bob","languageIds":["english","german","korean"],"primaryLanguageString":"german"},
-    {"name":"adam","languageIds":["english","java","python","javascript"],"primaryLanguageString":"english"},
-    {"name":"mary","languageIds":["java","python","javascript"],"primaryLanguageString":"java"}
+   {"name":"german","greeting":"guten tag"},
+   {"name":"korean","greeting":"Anyoung haseyo"},
+   {"name":"english","greeting":"hello"},
+   {"name":"python","greeting":"hello world"},
+   {"name":"java","greeting":"hello world"},
+   {"name":"javascript","greeting":"hello world"}
+]
+```
+
+12. Functional - getOneLanguage
+```
+POST http://localhost:8080/api/functional/languages/one
+```
+Body:
+```JSON
+{
+    "name": "korean"
+}
+```
+Response:
+```JSON
+{
+    "name": "korean",
+    "greeting": "Anyoung haseyo"
+}
+```
+
+13. Functional - saveOneLanguage
+```
+POST http://localhost:8080/api/functional/languages/new
+```
+Body:
+```JSON
+{
+    "name": "korean",
+    "greeting": "Anyoung haseyo"
+}
+```
+Response:
+```JSON
+{
+    "name": "korean",
+    "greeting": "Anyoung haseyo"
+}
+```
+14. Functional - deleteOneLanguage
+```
+DELETE http://localhost:8080/api/functional/languages/one
+```
+
+20. Functional - updateOneLanguage
+```
+PUT http://localhost:8080/api/functional/languages/one
+```
+Body:
+```JSON
+{
+    "name": "korean",
+    "greeting": "seffsfefsefsfefes haseyo"
+}
+```
+Response:
+```JSON
+{
+    "name": "korean",
+    "greeting": "seffsfefsefsfefes haseyo"
+}
+```
+21. Functional - getAllLanguages
+```
+GET http://localhost:8080/api/functional/languages/all
+```
+```JSON
+[
+   {"name":"german","greeting":"guten tag"},
+   {"name":"korean","greeting":"Anyoung haseyo"},
+   {"name":"english","greeting":"hello"},
+   {"name":"python","greeting":"hello world"},
+   {"name":"java","greeting":"hello world"},
+   {"name":"javascript","greeting":"hello world"}
 ]
 ```
 
@@ -112,12 +194,18 @@ POST http://localhost:8080/magiclink
 
 Quite a bit has changed in WebFlux, etc.
 
-1. First, `.block()` is no longer allowed in any **Reactive Thread**.
-2. Second, needed to remove some configuration that was more permissively allowed previously. (Some have been upgraded from **Warnings** to **Exceptions** or **Errors**)
-3. Need to reenable some CORS settings once frontend is updated: `allowCredentials(false)` needs to be reset to `true` and the **HTTP Header** needs to be passed.
-4. Looks like `@DBRef` has changed (this may have been misconfigured previously but wasn't blocking or throwing an **Exceptions**)!
-5. Some caching needs to be corrected.
-6. I swapped out email smtp, etc. 
+1. First, `.block()` is no longer allowed in any **Reactive Thread**. Removed.
+2. Divided handlers and repositories into blocking and non-blocking services.
+3. Two MongoDB connections (one reactive, one blocking) are now configured.
+4. Second, needed to remove some configuration that was more permissively allowed previously. (Some have been upgraded from **Warnings** to **Exceptions** or **Errors**)
+5. Need to reenable some CORS settings once frontend is updated: `allowCredentials(false)` needs to be reset to `true` and the **HTTP Header** needs to be passed.
+6. Some caching needs to be corrected.
+7. Proper `pom.xml`
+8. I swapped out email smtp, etc. 
+9. Spring Data Mongo DB no longer supports `@DBRef` or any `@DocumentReference` within a reactive infrastructure.
+   * https://github.com/spring-projects/spring-data-mongodb/issues/3808
+   * Looks like `@DBRef` has changed (this may have been misconfigured previously but wasn't blocking or throwing an **Exceptions**)!
+   * Bottom of [18.5.9](https://docs.spring.io/spring-data/mongodb/docs/3.3.0-M2/reference/html/#mapping-usage.document-references) in comment: `There is no support for reading document references using reactive infrastructure.`
 
 ## Resources and Links
 
@@ -128,3 +216,6 @@ Quite a bit has changed in WebFlux, etc.
 5. https://www.baeldung.com/spring-webflux-404
 6. https://bootify.io/mongodb/document-reference-in-spring-boot-mongodb.html
 7. https://www.baeldung.com/spring-mongodb-dbref-annotation
+8. https://docs.spring.io/spring-data/mongodb/docs/3.3.0-M2/reference/html/#mapping-usage.document-references
+9. https://thepracticaldeveloper.com/full-reactive-stack-2-backend-webflux/
+10. https://www.devglan.com/spring-boot/spring-boot-mongodb-crud

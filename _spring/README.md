@@ -196,11 +196,11 @@ Quite a bit has changed in WebFlux, etc.
 
 1. First, `.block()` is no longer allowed in any **Reactive Thread**. Removed.
 2. Divided handlers and repositories into blocking and non-blocking services.
-3. Two MongoDB connections (one reactive, one blocking) are now configured.
-4. Second, needed to remove some configuration that was more permissively allowed previously. (Some have been upgraded from **Warnings** to **Exceptions** or **Errors**)
+3. Two MongoDB connections (one reactive, one blocking) are now configured. Needed to refamiliarize myself with `MongoTemplate` and `Repository` patterns (also basic configuration vs. `AbstractMongoClientConfiguration`).
+4. Second, needed to remove some configuration that was more permissively allowed pr**e**viously. (Some have been upgraded from **Warnings** to **Exceptions** or **Errors**)
 5. Need to reenable some CORS settings once frontend is updated: `allowCredentials(false)` needs to be reset to `true` and the **HTTP Header** needs to be passed.
 6. Some caching needs to be corrected.
-7. Proper `pom.xml`
+7. Proper `pom.xml` for MongoDB drivers: `mongodb-driver-sync`.
 8. I swapped out email smtp, etc. 
 9. Spring Data Mongo DB no longer supports `@DBRef` or any `@DocumentReference` within a reactive infrastructure.
    * https://github.com/spring-projects/spring-data-mongodb/issues/3808
@@ -219,3 +219,4 @@ Quite a bit has changed in WebFlux, etc.
 8. https://docs.spring.io/spring-data/mongodb/docs/3.3.0-M2/reference/html/#mapping-usage.document-references
 9. https://thepracticaldeveloper.com/full-reactive-stack-2-backend-webflux/
 10. https://www.devglan.com/spring-boot/spring-boot-mongodb-crud
+11. https://www.baeldung.com/spring-data-mongodb-tutorial

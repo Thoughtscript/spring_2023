@@ -10,7 +10,6 @@ repositories {
 dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-parent', version: '2.7.5', ext: 'pom'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-webflux', version: '2.7.5'
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.7.5'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb-reactive', version: '2.7.5'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis-reactive', version: '2.7.5'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-amqp', version: '2.7.5'

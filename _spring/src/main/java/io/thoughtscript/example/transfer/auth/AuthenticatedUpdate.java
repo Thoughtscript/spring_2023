@@ -1,13 +1,15 @@
 package io.thoughtscript.example.transfer.auth;
 
+import io.thoughtscript.example.domain.Language;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
-public class AuthenticatedUpdate extends TokenAuth {
-  private String newUsername;
+public class AuthenticatedUpdate extends AuthenticatedUuid {
+  private Language newPrimaryLanguage;
+  private List<Language> newLanguages;
   private String newName;
-  private String newPhone;
-  private String newEmail;
 }

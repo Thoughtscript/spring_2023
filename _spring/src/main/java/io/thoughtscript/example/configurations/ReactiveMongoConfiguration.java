@@ -2,8 +2,8 @@ package io.thoughtscript.example.configurations;
 
 import com.mongodb.reactivestreams.client.MongoClient;
 import com.mongodb.reactivestreams.client.MongoClients;
-import io.thoughtscript.example.reactiverepositories.EmailMongoReactiveRepository;
-import io.thoughtscript.example.reactiverepositories.UserMongoReactiveRepository;
+import io.thoughtscript.example.reactiverepositories.LanguageMongoReactiveRepository;
+import io.thoughtscript.example.reactiverepositories.LanguageStudentMongoReactiveRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -12,9 +12,8 @@ import org.springframework.data.mongodb.config.AbstractReactiveMongoConfiguratio
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRepositories;
 
-
 @Configuration
-@EnableReactiveMongoRepositories(basePackageClasses = {UserMongoReactiveRepository.class, EmailMongoReactiveRepository.class})
+@EnableReactiveMongoRepositories(basePackageClasses = {LanguageMongoReactiveRepository.class, LanguageStudentMongoReactiveRepository.class})
 @ComponentScan(basePackages = "io.thoughtscript.example.reactiverepositories")
 class ReactiveMongoConfiguration extends AbstractReactiveMongoConfiguration {
 

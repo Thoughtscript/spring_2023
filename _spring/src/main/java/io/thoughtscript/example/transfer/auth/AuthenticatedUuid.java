@@ -6,5 +6,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AuthenticatedUuid extends TokenAuth {
-  private String id;
+  private String name;
 }

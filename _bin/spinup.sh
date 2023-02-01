@@ -10,6 +10,6 @@
 
 sleep 3.5 && cd ../_spring && mvn clean && mvn spring-boot:run &
 
-sleep 5.5 && cd ../_react && npm i && npm run build-parcel-prod && npx serve &
+# sleep 5.5 && cd ../_react && npm i && npm run build-parcel-prod && npx serve &
 
 wait

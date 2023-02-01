@@ -2,16 +2,16 @@ package io.thoughtscript.example.domain;
 
 import io.thoughtscript.example.Constants;
 import java.util.Date;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.annotation.Id;
 
 @Slf4j
-@Data
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class RedisAuthentication {
 
   @Id
@@ -23,13 +23,6 @@ public class RedisAuthentication {
     this.username = username;
     this.token = token;
     this.expires = new Date().getTime() + Constants.FIFTEEN_MINS;
-  }
-
-  //Only Use When Deserializing From Redis String
-  public RedisAuthentication(String username, String token, long expires) {
-    this.username = username;
-    this.token = token;
-    this.expires = expires;
   }
 
   public boolean hasExpired() {

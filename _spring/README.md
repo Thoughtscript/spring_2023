@@ -40,16 +40,72 @@ keytool -genkey \
 
 ## API
 
-1. http://localhost:8080/api/functional/user/all
+### Secured
 
+1. Secured - getOneUser
 ```
-{"users":[
-    {"username":"userTwo","name":"John Doe","phone":"222-222-2222","contacts":[],"email":null},
-    {"username":"userOne","name":"Jane Doe","phone":"111-111-1111","contacts":[],"email":null},
-    {"username":"userThree","name":"Every Person","phone":"333-333-3333","contacts":[],"email":null}],
-    "contacts":[],
-    "message":"Success!"
- }
+POST http://localhost:8080/api/flux/students/one
+```
+
+2. Secured - saveOneUser
+```
+POST http://localhost:8080/api/flux/students/one/new
+```
+
+3. Secured - getOneUser
+```
+DELETE http://localhost:8080/api/flux/students/one
+```
+
+4. Secured - updateOneUser
+```
+POST http://localhost:8080/api/flux/students/one
+```
+
+5. Secured - getAllUsers
+```
+POST http://localhost:8080/api/flux/students/all
+```
+
+### Public
+
+6. getOneLanguageStudent
+```
+POST http://localhost:8080/api/functional/students/one
+```
+
+7. saveOneLanguageStudent
+```
+POST http://localhost:8080/api/functional/students/new
+```
+
+8. deleteOneLanguageStudent
+```
+DELETE http://localhost:8080/api/functional/students/one
+```
+
+9. updateOneLanguageStudent
+```
+PUT http://localhost:8080/api/functional/students/one
+```
+
+10. getAllLanguageStudent
+```
+GET http://localhost:8080/api/functional/students/all
+```
+```JSON
+[
+    {"name":"bob","languageIds":["english","german","korean"],"primaryLanguageString":"german"},
+    {"name":"adam","languageIds":["english","java","python","javascript"],"primaryLanguageString":"english"},
+    {"name":"mary","languageIds":["java","python","javascript"],"primaryLanguageString":"java"}
+]
+```
+
+### Auth
+
+11. magiclink
+```
+POST http://localhost:8080/magiclink
 ```
 
 ## Notes
@@ -62,3 +118,13 @@ Quite a bit has changed in WebFlux, etc.
 4. Looks like `@DBRef` has changed (this may have been misconfigured previously but wasn't blocking or throwing an **Exceptions**)!
 5. Some caching needs to be corrected.
 6. I swapped out email smtp, etc. 
+
+## Resources and Links
+
+1. https://szymonsawicki.net/webflux-and-mongodb-rest-api-using-ddd/
+2. https://www.linkedin.com/pulse/introduction-reactive-programming-spring-webflux-aneshka-goyal/?trk=pulse-article_more-articles_related-content-card
+3. https://howtodoinjava.com/spring-webflux/spring-webflux-tutorial/
+4. https://www.javaguides.net/2023/01/spring-webflux-reactive-crud-rest-api.html
+5. https://www.baeldung.com/spring-webflux-404
+6. https://bootify.io/mongodb/document-reference-in-spring-boot-mongodb.html
+7. https://www.baeldung.com/spring-mongodb-dbref-annotation

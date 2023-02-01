@@ -5,14 +5,14 @@ public class Constants {
     //Non-property constants
 
     //Reactive Endpoints
-    public static final String API_FLUX_USER_ONE = "/api/flux/user/one";
-    public static final String API_FLUX_USER_NEW = "/api/flux/user/one/new";
-    public static final String API_FLUX_USER_ALL = "/api/flux/user/all";
+    public static final String API_FLUX_USER_ONE = "/api/flux/students/one";
+    public static final String API_FLUX_USER_NEW = "/api/flux/students/one/new";
+    public static final String API_FLUX_USER_ALL = "/api/flux/students/all";
 
     //Functional Router Endpoints
-    public static final String API_ROUTER_USER_ONE = "/api/functional/user/one";
-    public static final String API_ROUTER_USER_NEW = "/api/functional/user/new";
-    public static final String API_ROUTER_USER_ALL = "/api/functional/user/all";
+    public static final String API_ROUTER_USER_ONE = "/api/functional/students/one";
+    public static final String API_ROUTER_USER_NEW = "/api/functional/students/new";
+    public static final String API_ROUTER_USER_ALL = "/api/functional/students/all";
 
     //Passwordless Auth Endpoints
     public static final String AUTH_LOGIN_ENDPOINT_FULLY_QUALIFIED = "http://127.0.0.1:8181/secured";

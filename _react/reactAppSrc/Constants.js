@@ -1,7 +1,7 @@
 'use strict'
 
 /**
- *  Constants - client-side constants. Publicly exposed!
+ *  Constants - clientside config. Publicly exposed!
  *
  *  @Author - Adam InTae Gerard - https://www.linkedin.com/in/adamintaegerard/
  */
@@ -20,3 +20,9 @@ export const
   FLUX_API = '/api/flux/user/all',
   FUNCTIONAL_API = '/api/functional/user/all',
   PASSWORDLESS_SIGN_IN = '/magiclink'
+
+export const
+  DEFAULT_EMAIL = 'adam.gerard@gmail.com',
+  DEFAULT_USER = 'adam'
+
+export const api = suffix => `${API_PROTOCOL}://${API_HOST_PORT}${suffix}`

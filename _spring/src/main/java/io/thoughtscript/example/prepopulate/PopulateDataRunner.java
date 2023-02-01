@@ -1,103 +1,90 @@
 package io.thoughtscript.example.prepopulate;
 
+import io.thoughtscript.example.domain.Language;
+import io.thoughtscript.example.domain.LanguageStudent;
 import io.thoughtscript.example.domain.RedisAuthentication;
-import io.thoughtscript.example.domain.email.MongoEmail;
-import io.thoughtscript.example.domain.user.MongoUser;
 import io.thoughtscript.example.reactiverepositories.AuthenticationRedisReactiveRepository;
-import io.thoughtscript.example.reactiverepositories.EmailMongoReactiveRepository;
-import io.thoughtscript.example.reactiverepositories.EmailRedisReactiveRepository;
-import io.thoughtscript.example.reactiverepositories.UserMongoReactiveRepository;
-import io.thoughtscript.example.reactiverepositories.UserRedisReactiveRepository;
+import io.thoughtscript.example.reactiverepositories.LanguageMongoReactiveRepository;
+import io.thoughtscript.example.reactiverepositories.LanguageStudentMongoReactiveRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Slf4j
 @Component
-public class PopulateDataRunner implements CommandLineRunner {
+public class
+PopulateDataRunner implements CommandLineRunner {
 
   @Autowired
-  EmailMongoReactiveRepository emailMongoReactiveRepository;
+  LanguageMongoReactiveRepository languageMongoReactiveRepository;
 
   @Autowired
-  EmailRedisReactiveRepository emailRedisReactiveRepository;
-
-  @Autowired
-  UserMongoReactiveRepository userMongoReactiveRepository;
-
-  @Autowired
-  UserRedisReactiveRepository userRedisReactiveRepository;
+  LanguageStudentMongoReactiveRepository languageStudentMongoReactiveRepository;
 
   @Autowired
   AuthenticationRedisReactiveRepository authenticationRedisReactiveRepository;
 
   @Override
   public void run(String... args) throws Exception {
+
     log.info(
-        "Beginning to pre-populate the database with contact and email data... waiting 20 seconds ...");
+            "Beginning to pre-populate the database with data... waiting 20 seconds ...");
 
     try {
       Thread.sleep(20000);
 
       /**
-       * Generate and Persist Emails to MongoDB.
+       * Generate and Persist to MongoDB.
        */
+      Language korean = new Language("korean");
+      Language english = new Language("english");
+      Language german = new Language("german");
+      Language java = new Language("java");
+      Language python = new Language("python");
+      Language javascript = new Language("javascript");
 
-      MongoEmail emailA = new MongoEmail("email@internet.web");
-      MongoEmail emailB = new MongoEmail("digitalmail@web.internet");
-      MongoEmail emailC = new MongoEmail("hi@iam.example");
+      log.info("Preparing to pre-populate the database with data...");
+      languageMongoReactiveRepository.saveAll(Flux.just(korean, english, german, java, python, javascript)).subscribe();
+      log.info("Verifying persist to MongoDB...");
+      languageMongoReactiveRepository.findAll().log().map(Language::getName).subscribe(log::info);
 
-      log.info("Preparing to pre-populate the database with email data...");
-      emailMongoReactiveRepository.saveAll(Flux.just(emailA, emailB, emailC)).subscribe();
-      log.info("Verifying email persist to MongoDB...");
-      emailMongoReactiveRepository.findAll().log().map(MongoEmail::getAddress).subscribe(log::info);
+      Thread.sleep(10000);
 
-      /**
-       * Generate and Persist Users to MongoDB.
-       */
+      List<Language> adamsLanguages = new ArrayList<>();
+      adamsLanguages.add(english);
+      adamsLanguages.add(java);
+      adamsLanguages.add(python);
+      adamsLanguages.add(javascript);
 
-      MongoUser contactA = new MongoUser("userOne", "Jane Doe", "111-111-1111", emailA, null);
-      MongoUser contactB = new MongoUser("userTwo", "John Doe", "222-222-2222", emailB, null);
-      MongoUser contactC = new MongoUser("userThree", "Every Person", "333-333-3333", emailC, null);
+      LanguageStudent adam = new LanguageStudent("adam", adamsLanguages, english);
 
-      log.info("Preparing to pre-populate the database with user data...");
-      userMongoReactiveRepository.saveAll(Flux.just(contactA, contactB, contactC)).subscribe();
-      log.info("Verifying user persist to MongoDB...");
-      userMongoReactiveRepository.findAll().log().map(MongoUser::getUsername).subscribe(log::info);
+      List<Language> bobsLanguages = new ArrayList<>();
+      bobsLanguages.add(english);
+      bobsLanguages.add(german);
+      bobsLanguages.add(korean);
 
-      /**
-       * Generate and Persist Emails to Redis.
-       */
+      LanguageStudent bob = new LanguageStudent("bob", bobsLanguages, german);
 
-      log.info("Preparing to cache the database with email data...");
-      emailRedisReactiveRepository.save(emailA).subscribe();
-      emailRedisReactiveRepository.save(emailB).subscribe();
-      emailRedisReactiveRepository.save(emailC).subscribe();
+      List<Language> marysLanguage = new ArrayList<>();
+      marysLanguage.add(java);
+      marysLanguage.add(python);
+      marysLanguage.add(javascript);
 
-      Thread.sleep(5000);
+      LanguageStudent mary = new LanguageStudent("mary", marysLanguage, java);
 
-      log.info("Verifying email persist to Redis...");
-      emailRedisReactiveRepository.findByAddress(emailA.getAddress()).subscribe();
-      emailRedisReactiveRepository.findByAddress(emailB.getAddress()).subscribe();
-      emailRedisReactiveRepository.findByAddress(emailC.getAddress()).subscribe();
+      log.info("Preparing to pre-populate the database with data...");
+      languageStudentMongoReactiveRepository.saveAll(Flux.just(adam, bob, mary)).subscribe();
+      log.info("Verifying persist to MongoDB...");
+      languageStudentMongoReactiveRepository.findAll().log().map(LanguageStudent::getName).subscribe(log::info);
+      languageStudentMongoReactiveRepository.findAll().log().map(LanguageStudent::getLanguageIds).subscribe(t -> log.info(String.valueOf(t)));
+      languageStudentMongoReactiveRepository.findAll().log().map(LanguageStudent::getPrimaryLanguageString).subscribe(log::info);
 
-      /**
-       * Generate and Persist Users to Redis.
-       */
-
-      log.info("Preparing to cache the database with user data...");
-      userRedisReactiveRepository.save(contactA).subscribe();
-      userRedisReactiveRepository.save(contactB).subscribe();
-      userRedisReactiveRepository.save(contactC).subscribe();
-
-      Thread.sleep(5000);
-
-      log.info("Verifying user persist to Redis...");
-      userRedisReactiveRepository.findOneByUsername(contactA.getUsername()).subscribe();
-      userRedisReactiveRepository.findOneByUsername(contactB.getUsername()).subscribe();
-      userRedisReactiveRepository.findOneByUsername(contactC.getUsername()).subscribe();
+      Thread.sleep(10000);
 
       /**
        * Generate Default Authentication.

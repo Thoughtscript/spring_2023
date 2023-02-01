@@ -16,8 +16,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
-import static org.springframework.web.reactive.function.server.RouterFunctions.route;
-
 @Configuration
 public class WebFluxRouterConfiguration {
     @Bean
@@ -28,11 +26,11 @@ public class WebFluxRouterConfiguration {
         @Bean
         @Autowired
         public RouterFunction<ServerResponse> routes(FunctionalRouterWebHandler handler) {
-            return route(POST(API_ROUTER_USER_ONE).and(accept(APPLICATION_JSON)), handler::getOneUser)
-                    .andRoute(POST(API_ROUTER_USER_NEW).and(accept(APPLICATION_JSON)), handler::saveOneUser)
-                    .andRoute(DELETE(API_ROUTER_USER_ONE).and(accept(APPLICATION_JSON)), handler::deleteOneUser)
-                    .andRoute(PUT(API_ROUTER_USER_ONE).and(accept(APPLICATION_JSON)), handler::updateOneUser)
-                    .andRoute(GET(API_ROUTER_USER_ALL).and(accept(APPLICATION_JSON)), handler::getAllUsers);
+            return route(POST(API_ROUTER_USER_ONE).and(accept(APPLICATION_JSON)), handler::getOneLanguageStudent)
+                    .andRoute(POST(API_ROUTER_USER_NEW).and(accept(APPLICATION_JSON)), handler::saveOneLanguageStudent)
+                    .andRoute(DELETE(API_ROUTER_USER_ONE).and(accept(APPLICATION_JSON)), handler::deleteOneLanguageStudent)
+                    .andRoute(PUT(API_ROUTER_USER_ONE).and(accept(APPLICATION_JSON)), handler::updateOneLanguageStudent)
+                    .andRoute(GET(API_ROUTER_USER_ALL).and(accept(APPLICATION_JSON)), handler::getAllLanguageStudent);
         }
 
 }

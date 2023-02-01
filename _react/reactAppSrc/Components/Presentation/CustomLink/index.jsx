@@ -1,11 +1,11 @@
-'use strict'
+'use strict';
 
 /**
- *  Custom anchor boilerplate with rel security.
+ *  Custom a boilerplate.
  *
  *  @Author - Adam InTae Gerard - https://www.linkedin.com/in/adamintaegerard/
  */
 
 import React from 'react'
 
-export default ({url, label}) => <a href={url} rel="nofollow noopener noreferrer" target="_blank">{label}</a>
+export default ({url, label}) => <a href={url} target="_blank">{label}</a>

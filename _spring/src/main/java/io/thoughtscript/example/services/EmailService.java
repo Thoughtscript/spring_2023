@@ -1,8 +1,8 @@
 package io.thoughtscript.example.services;
 
 import io.thoughtscript.example.Constants;
-import io.thoughtscript.example.transfer.request.EmailRequestBody;
-import io.thoughtscript.example.transfer.response.EmailResponse;
+import io.thoughtscript.example.transfer.request.MailHogEmailRequestBody;
+import io.thoughtscript.example.transfer.response.MailHogEmailResponseBody;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -26,15 +26,14 @@ public class EmailService {
                     .create()
                     .post()
                     .uri(Constants.SMTP_SERVER)
-                    .bodyValue(new EmailRequestBody(emailContent.toString()))
+                    .bodyValue(new MailHogEmailRequestBody(emailContent.toString()))
                     .retrieve()
-                    .toEntity(EmailResponse.class).flatMap(responseEntity -> {
+                    .toEntity(MailHogEmailResponseBody.class).flatMap(responseEntity -> {
                         log.info("WebClient message sent!");
-                        //log.info(responseEntity.toString());
-                        //log.info(responseEntity.getBody().getMessage());
+                        log.info(responseEntity.toString());
+                        log.info(responseEntity.getBody().getMessage());
                         return Mono.empty();
-                    })
-                    .block();
+                    });
 
         } catch (Exception ex) {
 

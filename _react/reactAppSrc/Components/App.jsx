@@ -8,7 +8,7 @@
 
 import React from 'react'
 import Router from './Navigation/Router'
-import './Application.css'
-import './Mobile.css'
+import './Application.scss'
+import './Mobile.scss'
 
 export default () => <Router/>

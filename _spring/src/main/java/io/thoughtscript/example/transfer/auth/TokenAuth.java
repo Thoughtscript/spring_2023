@@ -6,6 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TokenAuth {
-  private String username;
+  private String tokenUsername;
   private String token;
 }

@@ -7,11 +7,10 @@
  */
 
 import React from 'react'
-import {Menu} from '../../Navigation/Menu'
-import './CustomHeader.css'
+import { Menu } from '../../Navigation/Menu'
 
 export default () =>
-    <header>
-        <h2>React 2022</h2>
-        <Menu/>
-    </header>
+  <header>
+    <h2>X-Team WebFlux</h2>
+    <Menu/>
+  </header>

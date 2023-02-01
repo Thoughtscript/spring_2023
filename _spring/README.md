@@ -42,59 +42,59 @@ keytool -genkey \
 
 ### Secured
 
-1. Secured - getOneLanguageStudent
+#### Secured - getOneLanguageStudent
 ```
 POST http://localhost:8080/api/students/one
 ```
 
-2. Secured - saveOneLanguageStudent
+#### Secured - saveOneLanguageStudent
 ```
 POST http://localhost:8080/api/students/one/new
 ```
 
-3. Secured - deleteOneLanguageStudent
+#### Secured - deleteOneLanguageStudent
 ```
 DELETE http://localhost:8080/api/students/one
 ```
 
-4. Secured - updateOneLanguageStudent
+#### Secured - updateOneLanguageStudent
 ```
 POST http://localhost:8080/api/students/one
 ```
 
-5. Secured - getAllLanguageStudents
+#### Secured - getAllLanguageStudents
 ```
 POST http://localhost:8080/api/students/all
 ```
 
-6. Secured - getOneLanguage
+#### Secured - getOneLanguage
 ```
 POST http://localhost:8080/api/flux/languages/one
 ```
 
-7. Secured - saveOneLanguage
+#### Secured - saveOneLanguage
 ```
 POST http://localhost:8080/api/flux/languages/one/new
 ```
 
-8. Secured - deleteOneLanguage
+#### Secured - deleteOneLanguage
 ```
 DELETE http://localhost:8080/api/flux/languages/one
 ```
 
-9. Secured - updateOneLanguage
+#### Secured - updateOneLanguage
 ```
 POST http://localhost:8080/api/flux/languages/one
 ```
 
-10. Secured - getAllLanguages
+#### Secured - getAllLanguages
 ```
 POST http://localhost:8080/api/flux/languages/all
 ```
 
 ### Public
 
-11. Unsecured - getAllLanguages
+#### Unsecured - getAllLanguages
 ```
 GET http://localhost:8080/api/unsecured/languages/all
 ```
@@ -109,7 +109,7 @@ GET http://localhost:8080/api/unsecured/languages/all
 ]
 ```
 
-12. Functional - getOneLanguage
+#### Functional - getOneLanguage
 ```
 POST http://localhost:8080/api/functional/languages/one
 ```
@@ -127,7 +127,7 @@ Response:
 }
 ```
 
-13. Functional - saveOneLanguage
+#### Functional - saveOneLanguage
 ```
 POST http://localhost:8080/api/functional/languages/new
 ```
@@ -145,12 +145,12 @@ Response:
     "greeting": "Anyoung haseyo"
 }
 ```
-14. Functional - deleteOneLanguage
+#### Functional - deleteOneLanguage
 ```
 DELETE http://localhost:8080/api/functional/languages/one
 ```
 
-20. Functional - updateOneLanguage
+#### Functional - updateOneLanguage
 ```
 PUT http://localhost:8080/api/functional/languages/one
 ```
@@ -168,7 +168,7 @@ Response:
     "greeting": "seffsfefsefsfefes haseyo"
 }
 ```
-21. Functional - getAllLanguages
+#### Functional - getAllLanguages
 ```
 GET http://localhost:8080/api/functional/languages/all
 ```
@@ -185,7 +185,7 @@ GET http://localhost:8080/api/functional/languages/all
 
 ### Auth
 
-11. magiclink
+#### magiclink
 ```
 POST http://localhost:8080/magiclink
 ```

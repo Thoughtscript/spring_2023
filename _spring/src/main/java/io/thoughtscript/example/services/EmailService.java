@@ -11,7 +11,7 @@ import reactor.core.publisher.Mono;
 @Service
 public class EmailService {
 
-    public void sendMagicEmail(String email, String username, String token) {
+    public void sendMagicEmail(String email, String token) {
         try {
 
             StringBuffer emailContent = new StringBuffer();
@@ -19,8 +19,8 @@ public class EmailService {
             emailContent.append(Constants.AUTH_LOGIN_ENDPOINT_FULLY_QUALIFIED);
             emailContent.append("?token=");
             emailContent.append(token);
-            emailContent.append("&username=");
-            emailContent.append(username);
+            emailContent.append("&email=");
+            emailContent.append(email);
 
             org.springframework.web.reactive.function.client.WebClient
                     .create()

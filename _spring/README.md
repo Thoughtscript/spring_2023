@@ -47,6 +47,43 @@ keytool -genkey \
 POST http://localhost:8080/api/students/one
 ```
 
+Body:
+```JSON
+{
+    "tokenUsername": "xiu@email.com",
+    "token": "22222",
+    "name": "adam"
+}
+```
+Response:
+```JSON
+{
+    "name": "adam",
+    "languages": [
+        {
+            "name": "english",
+            "greeting": "hello"
+        },
+        {
+            "name": "java",
+            "greeting": "hello world"
+        },
+        {
+            "name": "python",
+            "greeting": "hello world"
+        },
+        {
+            "name": "javascript",
+            "greeting": "hello world"
+        }
+    ],
+    "primaryLanguage": {
+        "name": "english",
+        "greeting": "hello"
+    }
+}
+```
+
 #### Secured - saveOneLanguageStudent
 ```
 POST http://localhost:8080/api/students/one/new
@@ -71,7 +108,21 @@ POST http://localhost:8080/api/students/all
 ```
 POST http://localhost:8080/api/flux/languages/one
 ```
-
+Body:
+```JSON
+{
+    "tokenUsername": "xiu@email.com",
+    "token": "22222",
+    "name": "java"
+}
+```
+Response:
+```JSON
+{
+   "name": "java",
+   "greeting": "hello world"
+}
+```
 #### Secured - saveOneLanguage
 ```
 POST http://localhost:8080/api/flux/languages/one/new
@@ -90,6 +141,44 @@ POST http://localhost:8080/api/flux/languages/one
 #### Secured - getAllLanguages
 ```
 POST http://localhost:8080/api/flux/languages/all
+```
+
+Body:
+```JSON
+{
+    "tokenUsername": "xiu@email.com",
+    "token": "22222"
+}
+```
+
+Response:
+```JSON
+[
+    {
+        "name": "german",
+        "greeting": "guten tag"
+    },
+    {
+        "name": "english",
+        "greeting": "hello"
+    },
+    {
+        "name": "python",
+        "greeting": "hello world"
+    },
+    {
+        "name": "java",
+        "greeting": "hello world"
+    },
+    {
+        "name": "javascript",
+        "greeting": "hello world"
+    },
+    {
+        "name": "korean",
+        "greeting": "Anyoung haseyo"
+    }
+]
 ```
 
 ### Public
@@ -202,10 +291,13 @@ Quite a bit has changed in WebFlux, etc.
 6. Some caching needs to be corrected.
 7. Proper `pom.xml` for MongoDB drivers: `mongodb-driver-sync`.
 8. I swapped out email smtp, etc. 
+   * Note that tokens must be saved through both the blocking and non-blocking Redis repositories.
+   * To improve security, I restrict authentication `usernames` to email addresses.
 9. Spring Data Mongo DB no longer supports `@DBRef` or any `@DocumentReference` within a reactive infrastructure.
    * https://github.com/spring-projects/spring-data-mongodb/issues/3808
    * Looks like `@DBRef` has changed (this may have been misconfigured previously but wasn't blocking or throwing an **Exceptions**)!
    * Bottom of [18.5.9](https://docs.spring.io/spring-data/mongodb/docs/3.3.0-M2/reference/html/#mapping-usage.document-references) in comment: `There is no support for reading document references using reactive infrastructure.`
+10. This is not production-worthy, it's a fun experiment and migration.
 
 ## Resources and Links
 

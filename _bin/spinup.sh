@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-# docker stop mailhog/mailhog && docker rm mailhog/mailhog && docker run -d -p 1025:1025 -p 8025:8025 --name smtp mailhog/mailhog &
-
 # docker stop rabbitmq && docker rm rabbitmq && docker run -d -p 5672:5672 -p 15672:15672 --name my-rabbit rabbitmq:3-management &
 
 # docker stop mongodb && docker rm mongodb && docker run -d -p 27017:27017 --name mongodb mongo:6.0.3 &

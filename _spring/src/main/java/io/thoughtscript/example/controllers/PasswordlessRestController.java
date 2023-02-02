@@ -24,10 +24,9 @@ public class PasswordlessRestController {
   @PostMapping(AUTH_LOGIN_ENDPOINT)
   public void generateMagicLink(@RequestBody ForMagicLink forMagicLink) {
     try {
-      String username = forMagicLink.getUsername();
       String email = forMagicLink.getEmail();
-      String token = passwordlessReactiveAuthenticator.generateToken(username);
-      emailService.sendMagicEmail(email, username, token);
+      String token = passwordlessReactiveAuthenticator.generateToken(email);
+      emailService.sendMagicEmail(email, token);
     } catch (Exception ex) {
       log.error("Exception sending magic email: " + ex);
     }

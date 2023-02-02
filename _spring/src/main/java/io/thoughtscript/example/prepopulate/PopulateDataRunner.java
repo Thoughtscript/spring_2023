@@ -100,16 +100,16 @@ PopulateDataRunner implements CommandLineRunner {
        * Generate Default Authentication.
        */
 
-      RedisAuthentication redisAuthenticationXiu = new RedisAuthentication("xiu", "22222");
-      RedisAuthentication redisAuthenticationSolomon = new RedisAuthentication("solomon", "33333");
+      RedisAuthentication redisAuthenticationXiu = new RedisAuthentication("xiu@email.com", "22222");
+      RedisAuthentication redisAuthenticationSolomon = new RedisAuthentication("solomon@email.com", "33333");
 
-      //authenticationRedisReactiveRepository.save(redisAuthenticationXiu).subscribe();
-      //authenticationRedisReactiveRepository.save(redisAuthenticationSolomon).subscribe();
+      authenticationRedisReactiveRepository.save(redisAuthenticationXiu).subscribe();
+      authenticationRedisReactiveRepository.save(redisAuthenticationSolomon).subscribe();
       log.info("Verifying authentication persist to Redis...");
       Thread.sleep(5000);
 
-      //authenticationRedisReactiveRepository.findOneByUsername(redisAuthenticationXiu.getUsername()).subscribe();
-      //authenticationRedisReactiveRepository.findOneByUsername(redisAuthenticationSolomon.getUsername()).subscribe();
+      authenticationRedisReactiveRepository.findOneByUsername(redisAuthenticationXiu.getUsername()).subscribe();
+      authenticationRedisReactiveRepository.findOneByUsername(redisAuthenticationSolomon.getUsername()).subscribe();
 
       // blocking is accessible by reactive.
       // reactive is not accessible from blocking.
@@ -119,9 +119,6 @@ PopulateDataRunner implements CommandLineRunner {
 
       RedisAuthentication redisAuthenticationXiuBlocking = authenticationRedisBlockingRepository.findOneByUsernameBlocking(redisAuthenticationXiu.getUsername());
       RedisAuthentication redisAuthenticationSolomonBlocking = authenticationRedisBlockingRepository.findOneByUsernameBlocking(redisAuthenticationSolomon.getUsername());
-
-      authenticationRedisReactiveRepository.findOneByUsername(redisAuthenticationXiu.getUsername()).subscribe();
-      authenticationRedisReactiveRepository.findOneByUsername(redisAuthenticationSolomon.getUsername()).subscribe();
 
       log.info(redisAuthenticationXiuBlocking.getToken());
       log.info(redisAuthenticationSolomonBlocking.getToken());

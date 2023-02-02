@@ -6,6 +6,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ForMagicLink {
-  private String username;
   private String email;
 }

@@ -18,6 +18,7 @@ public class PasswordlessReactiveAuthenticator {
     public Mono<Boolean> authenticate(TokenAuth tokenAuth) {
         return authenticationRedisReactiveRepository
                 .findOneByUsername(tokenAuth.getTokenUsername())
+                .log()
                 .flatMap(principal -> {
 
                     if (principal != null) {

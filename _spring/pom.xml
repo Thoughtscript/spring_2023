@@ -30,14 +30,15 @@
             <artifactId>spring-boot-starter-webflux</artifactId>
             <version>${spring.boot.version}</version>
         </dependency>
+
+        <!-- Java Email Dependencies -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-mail</artifactId>
-            <version>${spring.boot.version}</version>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.5.5</version>
         </dependency>
 
-
-        <!-- Mongo Client Dependencies -->
+        <!-- Mongo DB Dependencies -->
         <!-- This should be left this way to avoid: NoClassDefFoundError: com/mongodb/client/MongoIterable -->
         <dependency>
             <groupId>org.mongodb</groupId>

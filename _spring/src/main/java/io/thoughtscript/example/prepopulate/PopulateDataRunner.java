@@ -102,26 +102,32 @@ PopulateDataRunner implements CommandLineRunner {
 
       RedisAuthentication redisAuthenticationXiu = new RedisAuthentication("xiu@email.com", "22222");
       RedisAuthentication redisAuthenticationSolomon = new RedisAuthentication("solomon@email.com", "33333");
+      RedisAuthentication redisAuthenticationAdam = new RedisAuthentication("adam.gerard@gmail.com", "435453");
 
       authenticationRedisReactiveRepository.save(redisAuthenticationXiu).subscribe();
       authenticationRedisReactiveRepository.save(redisAuthenticationSolomon).subscribe();
+      authenticationRedisReactiveRepository.save(redisAuthenticationAdam).subscribe();
       log.info("Verifying authentication persist to Redis...");
       Thread.sleep(5000);
 
       authenticationRedisReactiveRepository.findOneByUsername(redisAuthenticationXiu.getUsername()).subscribe();
       authenticationRedisReactiveRepository.findOneByUsername(redisAuthenticationSolomon.getUsername()).subscribe();
+      authenticationRedisReactiveRepository.findOneByUsername(redisAuthenticationAdam.getUsername()).subscribe();
 
       // blocking is accessible by reactive.
       // reactive is not accessible from blocking.
 
       authenticationRedisBlockingRepository.saveBlocking(redisAuthenticationXiu);
       authenticationRedisBlockingRepository.saveBlocking(redisAuthenticationSolomon);
+      authenticationRedisBlockingRepository.saveBlocking(redisAuthenticationAdam);
 
       RedisAuthentication redisAuthenticationXiuBlocking = authenticationRedisBlockingRepository.findOneByUsernameBlocking(redisAuthenticationXiu.getUsername());
       RedisAuthentication redisAuthenticationSolomonBlocking = authenticationRedisBlockingRepository.findOneByUsernameBlocking(redisAuthenticationSolomon.getUsername());
+      RedisAuthentication redisAuthenticatioAdamBlocking = authenticationRedisBlockingRepository.findOneByUsernameBlocking(redisAuthenticationAdam.getUsername());
 
       log.info(redisAuthenticationXiuBlocking.getToken());
       log.info(redisAuthenticationSolomonBlocking.getToken());
+      log.info(redisAuthenticatioAdamBlocking.getToken());
 
     } catch (Exception ex) {
       log.error("Exception pre-populating database with contact and email data: " + ex);

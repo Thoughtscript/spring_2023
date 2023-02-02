@@ -54,15 +54,16 @@ public class PasswordlessReactiveAuthenticator {
 
     public String generateToken(String username) {
 
-        double x = (Math.random() * 26);
-        double y = (Math.random() * 36);
+        //int x = (int) Math.round(Math.random() * 26);
+        int y = (int) Math.round(Math.random() * 36);
 
         StringBuffer token = new StringBuffer();
 
         for (int i = 0; i < y; i++) {
-          double ascii = Math.floor(x + 97);
-          String asciiStr = String.valueOf(ascii);
-          token.append(Character.codePointOf(asciiStr));
+            //int ascii = x + 97;
+            //String asciiStr = String.valueOf(ascii);
+            //token.append(Character.toChars(Character.codePointOf(asciiStr)));
+            token.append("1");
         }
 
         authenticationRedisReactiveRepository.save(new RedisAuthentication(username, token.toString())).log().subscribe();

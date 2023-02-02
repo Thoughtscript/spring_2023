@@ -18,6 +18,22 @@ spring:
         core-size: 2
         max-size: 4
 
+  # Enable auth
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: aaaaaaa
+    password: aaaaaaa
+    properties:
+      mail:
+        debug: true
+        transport:
+          protocol: smtp
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
   data:
     mongodb:
       port: 27017

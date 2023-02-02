@@ -26,7 +26,6 @@ public class Constants {
     //Passwordless Auth Endpoints
     public static final String AUTH_LOGIN_ENDPOINT_FULLY_QUALIFIED = "http://127.0.0.1:8181/secured";
     public static final String AUTH_LOGIN_ENDPOINT = "/magiclink";
-    public static final String SMTP_SERVER = "http://127.0.0.1:1025";
 
     //Email Magic Link
     public static final String EMAIL_MAGIC_LINK_GREETING = "Arrrrr! Trim up your pirate beard and get ready to board here: ";

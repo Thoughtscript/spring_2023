@@ -278,6 +278,12 @@ GET http://localhost:8080/api/functional/languages/all
 ```
 POST http://localhost:8080/magiclink
 ```
+Body:
+```JSON
+{
+    "email": "adam.gerard@gmail.com"
+}
+```
 
 ## Notes
 
@@ -290,6 +296,7 @@ Quite a bit has changed in WebFlux, etc.
 5. Need to reenable some CORS settings once frontend is updated: `allowCredentials(false)` needs to be reset to `true` and the **HTTP Header** needs to be passed.
 6. Some caching needs to be corrected.
 7. Proper `pom.xml` for MongoDB drivers: `mongodb-driver-sync`.
+   * Also Java Mail
 8. I swapped out email smtp, etc. 
    * Note that tokens must be saved through both the blocking and non-blocking Redis repositories.
    * To improve security, I restrict authentication `usernames` to email addresses.
@@ -312,3 +319,6 @@ Quite a bit has changed in WebFlux, etc.
 9. https://thepracticaldeveloper.com/full-reactive-stack-2-backend-webflux/
 10. https://www.devglan.com/spring-boot/spring-boot-mongodb-crud
 11. https://www.baeldung.com/spring-data-mongodb-tutorial
+12. https://www.digitalocean.com/community/tutorials/javamail-example-send-mail-in-java-smtp
+13. https://javatutorialhq.com/java/lang/character-class-tutorial/tochars-codepoint-method-example/
+14. https://www.baeldung.com/java-double-to-string

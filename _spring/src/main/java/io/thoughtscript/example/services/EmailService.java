@@ -1,42 +1,39 @@
 package io.thoughtscript.example.services;
 
 import io.thoughtscript.example.Constants;
-import io.thoughtscript.example.transfer.request.MailHogEmailRequestBody;
-import io.thoughtscript.example.transfer.response.MailHogEmailResponseBody;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Mono;
 
 @Slf4j
 @Service
 public class EmailService {
 
-    public void sendMagicEmail(String email, String token) {
-        try {
+    @Autowired
+    JavaMailSender javaMailSender;
 
-            StringBuffer emailContent = new StringBuffer();
-            emailContent.append(Constants.EMAIL_MAGIC_LINK_GREETING);
-            emailContent.append(Constants.AUTH_LOGIN_ENDPOINT_FULLY_QUALIFIED);
-            emailContent.append("?token=");
-            emailContent.append(token);
-            emailContent.append("&email=");
-            emailContent.append(email);
+    public void sendMagicEmail(String emailAddress, String token) {
+        SimpleMailMessage email = new SimpleMailMessage();
 
-            org.springframework.web.reactive.function.client.WebClient
-                    .create()
-                    .post()
-                    .uri(Constants.SMTP_SERVER)
-                    .bodyValue(new MailHogEmailRequestBody(emailContent.toString()))
-                    .retrieve()
-                    .toEntity(MailHogEmailResponseBody.class).flatMap(responseEntity -> {
-                        log.info("WebClient message sent!");
-                        log.info(responseEntity.toString());
-                        log.info(responseEntity.getBody().getMessage());
-                        return Mono.empty();
-                    });
+        StringBuffer emailContent = new StringBuffer();
+        emailContent.append(Constants.EMAIL_MAGIC_LINK_GREETING);
+        emailContent.append(Constants.AUTH_LOGIN_ENDPOINT_FULLY_QUALIFIED);
+        emailContent.append("?token=");
+        emailContent.append(token);
+        emailContent.append("&email=");
+        emailContent.append(emailAddress);
 
-        } catch (Exception ex) {
+        email.setFrom("testapp@test.com");
+        email.setTo(emailAddress);
+        email.setText(emailContent.toString());
+        email.setSubject("test");
 
-        }
+        log.info(email.getTo()[0]);
+        log.info(email.getText());
+        log.info(email.getSubject());
+
+        javaMailSender.send(email);
     }
 }

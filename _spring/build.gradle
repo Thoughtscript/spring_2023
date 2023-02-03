@@ -8,13 +8,17 @@ repositories {
 }
 
 dependencies {
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-parent', version: '2.7.3', ext: 'pom'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-parent', version: '2.7.8', ext: 'pom'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-webflux', version: '3.0.2'
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '3.0.2'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb-reactive', version: '3.0.2'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis-reactive', version: '3.0.2'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-amqp', version: '3.0.2'
     implementation group: 'org.mongodb', name: 'mongodb-driver-sync', version: '4.8.2'
+    implementation group: 'com.sun.mail', name: 'javax.mail', version: '1.5.6'
+
+    // For some reason M2 downloads this for javax.mail but Gradle doesn't
+    implementation group: 'jakarta.mail', name: 'jakarta.mail-api', version: '2.0.1'
+    implementation group: 'org.eclipse.angus', name: 'jakarta.mail', version: '2.0.1'
 
     // These are required for Gradle - thought JAXB was part of the spring-boot-starter-parent dependency tree? (Maven gets this automatically)
     implementation 'jakarta.xml.bind:jakarta.xml.bind-api:2.3.3'

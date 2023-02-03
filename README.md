@@ -55,3 +55,7 @@ keytool -genkey \
   -validity 730 \
   -keysize 4096
 ```
+
+## Security Flow
+
+![Magic Link](AuthFlow.webp)
